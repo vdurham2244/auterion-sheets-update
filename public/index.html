@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auterion Data Sync</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Auterion Data Sync</h1>
+        <div class="description">
+            <p>Click the button below to sync Auterion flight and vehicle data to Google Sheets</p>
+        </div>
+        
+        <button id="updateButton" class="update-btn">Update Sheets</button>
+        
+        <div id="loadingIndicator" class="loading-indicator hidden">
+            <div class="spinner"></div>
+            <p>Processing... Please wait</p>
+        </div>
+        
+        <div id="results" class="results hidden">
+            <h2>Update Results</h2>
+            <div class="results-container">
+                <div class="results-section">
+                    <h3>Flights</h3>
+                    <p id="flightsResult">No new flights added</p>
+                </div>
+                
+                <div class="results-section">
+                    <h3>Vehicles</h3>
+                    <p id="vehiclesResult">No new vehicles added</p>
+                </div>
+                
+                <div class="results-section">
+                    <h3>Vehicle Details</h3>
+                    <p id="detailsResult">Vehicle details updated</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="errorMessage" class="error hidden">
+            <h3>Error</h3>
+            <p id="errorText"></p>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
