@@ -3,8 +3,8 @@ const fs = require("fs");
 const axios = require("axios");
 require("dotenv").config();
 
-// Replace with your actual Google Sheet ID
-const SHEET_ID = "1JJfwsdmzYHRbo7TesMStC15BHtOTye3MYzoILzGu784";
+// Get Sheet ID from environment variable
+const SHEET_ID = process.env.SHEET_ID || "1JJfwsdmzYHRbo7TesMStC15BHtOTye3MYzoILzGu784";
 
 // Define read ranges for existing data and append ranges for new rows
 const FLIGHTS_READ_RANGE = "Flights!A:Z";   // Reads all rows/columns in the Flights sheet
@@ -16,11 +16,11 @@ const VEHICLE_DETAILS_RANGE = "VehicleDetails!A1"; // Full update for detailed i
 // Load service account credentials
 let serviceAccountKey;
 try {
-  if (process.env.GOOGLE_CREDENTIALS) {
-    // Try to parse credentials from environment variable
-    serviceAccountKey = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+  // Check for secret file in Render's secrets directory first
+  if (process.env.RENDER && fs.existsSync('/etc/secrets/GOOGLE_SERVICE_ACCOUNT.json')) {
+    serviceAccountKey = JSON.parse(fs.readFileSync('/etc/secrets/GOOGLE_SERVICE_ACCOUNT.json'));
   } else {
-    // Fallback to file for local development
+    // Fallback to local file for development
     serviceAccountKey = JSON.parse(fs.readFileSync("google-service-account.json"));
   }
 } catch (error) {
