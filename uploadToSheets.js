@@ -14,7 +14,20 @@ const VEHICLES_APPEND_RANGE = "Vehicles";    // Append to Vehicles sheet
 const VEHICLE_DETAILS_RANGE = "VehicleDetails!A1"; // Full update for detailed info
 
 // Load service account credentials
-const serviceAccountKey = JSON.parse(fs.readFileSync("google-service-account.json"));
+let serviceAccountKey;
+try {
+  if (process.env.GOOGLE_CREDENTIALS) {
+    // Try to parse credentials from environment variable
+    serviceAccountKey = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+  } else {
+    // Fallback to file for local development
+    serviceAccountKey = JSON.parse(fs.readFileSync("google-service-account.json"));
+  }
+} catch (error) {
+  console.error("Error loading Google credentials:", error);
+  throw new Error("Failed to load Google credentials");
+}
+
 const auth = new google.auth.GoogleAuth({
   credentials: serviceAccountKey,
   scopes: ["https://www.googleapis.com/auth/spreadsheets"]
